@@ -1,29 +1,34 @@
 <html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+	</head>
 	<body>
-		<h1>Flashcards</h1>
-		<div style="display: flex;">
-			<div style="flex-grow: 1;">
-				<div style="border: 1px solid #00c;">
-					SAT Vocabulary
-				</div>
-				<div style="border: 1px solid #00c;">
-					Chemistry
-				</div>
-			</div> 
-			<div style="flex-grow: 2;">
-				<div style= "border: 1px solid #00c;">
-					vocab word
-				</div>
-				<div style="display: flex;">
-					<div style="border: 1px solid #00c; flex-grow: 1;">
-						I know
+		<div class="container">
+			<h1>Flashcards</h1>
+			<div style="display: flex;">
+				<div class="navigation-box">
+					<div class="set-link">
+						SAT Vocabulary
 					</div>
-					<div style="border: 1px solid #00c; flex-grow: 1;">
-						I don't know
+					<div class="set-link">
+						Chemistry
 					</div>
-				</div>
-				<div style="border: 1px solid #00c;">
-					bar graph
+				</div> 
+				<div class="content-box">
+					<div class="flashcard-box">
+						vocab word
+					</div>
+					<div class="answer-buttonbar">
+						<div class="answer-button">
+							I knew
+						</div>
+						<div class="answer-button">
+							I didn't know
+						</div>
+					</div>
+					<div class="set-stats">
+						bar graph
+					</div>
 				</div>
 			</div>
 		</div>
