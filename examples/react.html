@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <script src="react-0.13.3/build/react.min.js"></script>
+    <script src="react-0.13.3/build/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="flashcard"></div>
+
+    <script type="text/jsx">
+
+      var FlashcardBox = React.createClass({
+        getInitialState: function() {
+          return {displayingWord: true};
+        },
+
+        handleClick: function() {
+          this.setState({displayingWord: !this.state.displayingWord});
+        },
+
+        render: function() {
+          var word = 'candid';
+          var definition = 'honest';
+          var textToDisplay = this.state.displayingWord ? word : definition;
+          return (
+            <div
+              style={{cursor: 'pointer', fontWeight: 'bold', border: '1px solid black', padding: 15}}
+              onClick={this.handleClick}>
+              {textToDisplay}
+            </div>
+          );
+        }
+      });
+
+      React.render(
+        <FlashcardBox />,
+        document.getElementById('flashcard')
+      );
+
+    </script>
+  </body>
+</html>

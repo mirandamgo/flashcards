@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <script src="jquery-1.11.3.min.js"></script>
+  </head>
+  <body>
+    <div id="flashcard"></div>
+    <script type="text/javascript">
+      $(function() {
+        var word = 'candid';
+        var definition = 'honest';
+        var displayingWord = true;
+        $('#flashcard').html(word);
+        $('#flashcard').css('cursor', 'pointer');
+        $('#flashcard').css('fontWeight', 'bold');
+        $('#flashcard').css('border', '1px solid black');
+        $('#flashcard').css('padding', '15px');
+        $('#flashcard').on('click', function() {
+          if (displayingWord) {
+            $('#flashcard').html(definition);
+            displayingWord = false;
+          } else {
+            $('#flashcard').html(word);
+            displayingWord = true;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
