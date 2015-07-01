@@ -1,3 +1,9 @@
+function storageLoad(){
+	return JSON.parse(window.localStorage.getItem("data"));
+};
+function storageSave(flashcardData){
+	window.localStorage.setItem("data", JSON.stringify(flashcardData));
+};
 function setup(flashcardData) {
 
 	var currentTimeStep = 0;
@@ -39,6 +45,7 @@ function setup(flashcardData) {
 			}
 		});
 		recalculateChart(flashcards);
+		storageSave(flashcardData);
 		return earliestFlashcard;
 		
 	}
@@ -88,14 +95,13 @@ function setup(flashcardData) {
 
 }
 $(function() {
-	var flashcardData = [
-		{
-			name: "Chemistry",
-			flashcards: [
-				{word: "Cu", definition: "Copper", timesCorrectInARow: 0, lastTimeSeen: 0},
-				{word: "Ag", definition: "Silver", timesCorrectInARow: 0, lastTimeSeen: 0},
-			]
-		},
+	var flashcardData = storageLoad();
+	if (flashcardData){
+		setup(flashcardData);
+		return;
+	}
+	flashcardData = [
+	
 	];
 	$.get("satvocab.csv").done(function(response){
 		var flashcards = [];
