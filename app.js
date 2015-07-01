@@ -1,46 +1,46 @@
-//TODO get actual flashcards
-var flashcardData = [
-	{
-		name: "SAT Vocabulary",
-		flashcards: [
-			{word: "candid", definition: "honest", timesCorrectInARow: 0, lastTimeSeen: 0},
-			{word: "vestigial", definition: "like the human appendix", timesCorrectInARow: 0, lastTimeSeen: 0},
-		]
-	},
-	{
-		name: "Chemistry",
-		flashcards: [
-			{word: "Cu", definition: "Copper", timesCorrectInARow: 0, lastTimeSeen: 0},
-			{word: "Ag", definition: "Silver", timesCorrectInARow: 0, lastTimeSeen: 0},
-		]
-	},
-];
-var currentTimeStep = 0;
-var currentDatum = flashcardData[0];
-var currentFlashcard = currentDatum['flashcards'][0];
+function setup() {
+	var flashcardData = [
+		{
+			name: "SAT Vocabulary",
+			flashcards: [
+				{word: "candid", definition: "honest", timesCorrectInARow: 0, lastTimeSeen: 0},
+				{word: "vestigial", definition: "like the human appendix", timesCorrectInARow: 0, lastTimeSeen: 0},
+			]
+		},
+		{
+			name: "Chemistry",
+			flashcards: [
+				{word: "Cu", definition: "Copper", timesCorrectInARow: 0, lastTimeSeen: 0},
+				{word: "Ag", definition: "Silver", timesCorrectInARow: 0, lastTimeSeen: 0},
+			]
+		},
+	];
+	var currentTimeStep = 0;
+	var currentDatum = flashcardData[0];
+	var currentFlashcard = currentDatum['flashcards'][0];
 
-function getNextFlashcard(flashcards) {
-	var earliestFlashcard = flashcards[0];
-	flashcards.forEach(function(flashcard) {
-		var lastTimeSeen = flashcard["lastTimeSeen"];
-		var timesCorrectInARow = flashcard["timesCorrectInARow"];
-		var whenToShowAgain = lastTimeSeen + Math.pow(2, timesCorrectInARow);
-		flashcard["whenToShowAgain"] = whenToShowAgain;
-		if (flashcard["whenToShowAgain"] < earliestFlashcard["whenToShowAgain"]) {
-			earliestFlashcard = flashcard;
-		}
-	});
-	return earliestFlashcard;
+	function getNextFlashcard(flashcards) {
+		var earliestFlashcard = flashcards[0];
+		flashcards.forEach(function(flashcard) {
+			var lastTimeSeen = flashcard["lastTimeSeen"];
+			var timesCorrectInARow = flashcard["timesCorrectInARow"];
+			var whenToShowAgain = lastTimeSeen + Math.pow(2, timesCorrectInARow);
+			flashcard["whenToShowAgain"] = whenToShowAgain;
+			if (flashcard["whenToShowAgain"] < earliestFlashcard["whenToShowAgain"]) {
+				earliestFlashcard = flashcard;
+			}
+		});
+		return earliestFlashcard;
+		
+	}
+	function displayFlashcard(flashcard) {
+		var wordElem = $("<div>"+flashcard['word']+"</div>");
+		$(".flashcard-box").html(wordElem);
+		currentTimeStep = currentTimeStep + 1;
+		flashcard['lastTimeSeen'] = currentTimeStep;
+	}
+
 	
-}
-function displayFlashcard(flashcard) {
-	var wordElem = $("<div>"+flashcard['word']+"</div>");
-	$(".flashcard-box").html(wordElem);
-	currentTimeStep = currentTimeStep + 1;
-	flashcard['lastTimeSeen'] = currentTimeStep;
-}
-
-$(function() {
 	var data = {
 		labels: ["incorrect", "correct"],
 		datasets: [
@@ -83,5 +83,10 @@ $(function() {
 		});
 		$("#subject-list").append(elem);
 	});
-	
+		
+
+
+}
+$(function() {
+	setup();
 });
