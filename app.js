@@ -75,13 +75,6 @@ function setup(flashcardData) {
 $(function() {
 	var flashcardData = [
 		{
-			name: "SAT Vocabulary",
-			flashcards: [
-				{word: "candid", definition: "honest", timesCorrectInARow: 0, lastTimeSeen: 0},
-				{word: "vestigial", definition: "like the human appendix", timesCorrectInARow: 0, lastTimeSeen: 0},
-			]
-		},
-		{
 			name: "Chemistry",
 			flashcards: [
 				{word: "Cu", definition: "Copper", timesCorrectInARow: 0, lastTimeSeen: 0},
@@ -89,5 +82,19 @@ $(function() {
 			]
 		},
 	];
-	setup(flashcardData);
+	$.get("satvocab.csv").done(function(response){
+		var flashcards = [];
+		flashcardData.push({name: "SAT Vocabulary", flashcards: flashcards});
+		var lines = response.split("\n");
+		
+		lines.forEach(function(line){
+			var fields = line.substring(1, line.length-1).split('","');
+			if (fields[0] && fields[1]) {
+				var flashcard = {word: fields[0], definition: fields[1], timesCorrectInARow: 0, lastTimeSeen: 0};
+				flashcards.push(flashcard);
+			}
+		});
+		setup(flashcardData);
+	});
+	
 });
