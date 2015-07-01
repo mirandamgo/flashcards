@@ -15,12 +15,30 @@ var flashcardData = [
 		]
 	},
 ];
+var currentTimeStep = 0;
+var currentDatum = flashcardData[0];
+var currentFlashcard = currentDatum['flashcards'][0];
 
 function getNextFlashcard(flashcards) {
-	return flashcards[0];
-	//TODO implement function properly
+	var earliestFlashcard = flashcards[0];
+	flashcards.forEach(function(flashcard) {
+		var lastTimeSeen = flashcard["lastTimeSeen"];
+		var timesCorrectInARow = flashcard["timesCorrectInARow"];
+		var whenToShowAgain = lastTimeSeen + Math.pow(2, timesCorrectInARow);
+		flashcard["whenToShowAgain"] = whenToShowAgain;
+		if (flashcard["whenToShowAgain"] < earliestFlashcard["whenToShowAgain"]) {
+			earliestFlashcard = flashcard;
+		}
+	});
+	return earliestFlashcard;
+	
 }
-
+function displayFlashcard(flashcard) {
+	var wordElem = $("<div>"+flashcard['word']+"</div>");
+	$(".flashcard-box").html(wordElem);
+	currentTimeStep = currentTimeStep + 1;
+	flashcard['lastTimeSeen'] = currentTimeStep;
+}
 
 $(function() {
 	var data = {
@@ -35,7 +53,19 @@ $(function() {
 	var myNewChart = new Chart(ctx).Bar(data);
 	
 	$(".flashcard-box").on("click", function() {
-		$(".flashcard-box").html("hello");
+		$(".flashcard-box").html(currentFlashcard['definition']);
+	});
+	$("#correct-button").on("click", function() {
+		console.log(currentDatum);
+		currentFlashcard['timesCorrectInARow'] = currentFlashcard['timesCorrectInARow'] + 1;
+		currentFlashcard = getNextFlashcard(currentDatum['flashcards']);
+		displayFlashcard(currentFlashcard);
+	});
+	$("#incorrect-button").on("click", function() {
+		console.log(currentDatum);
+		currentFlashcard['timesCorrectInARow'] = 0;
+		currentFlashcard = getNextFlashcard(currentDatum['flashcards']);
+		displayFlashcard(currentFlashcard);
 	});
 	
 	//create subject links on left
@@ -47,6 +77,9 @@ $(function() {
 		var elem = $(html);
 		elem.on("click", function() {
 			$("#title").html(datum['name']);
+			currentDatum = datum;
+			currentFlashcard = getNextFlashcard(currentDatum['flashcards']);
+			displayFlashcard(currentFlashcard);
 		});
 		$("#subject-list").append(elem);
 	});
