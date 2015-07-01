@@ -1,20 +1,5 @@
-function setup() {
-	var flashcardData = [
-		{
-			name: "SAT Vocabulary",
-			flashcards: [
-				{word: "candid", definition: "honest", timesCorrectInARow: 0, lastTimeSeen: 0},
-				{word: "vestigial", definition: "like the human appendix", timesCorrectInARow: 0, lastTimeSeen: 0},
-			]
-		},
-		{
-			name: "Chemistry",
-			flashcards: [
-				{word: "Cu", definition: "Copper", timesCorrectInARow: 0, lastTimeSeen: 0},
-				{word: "Ag", definition: "Silver", timesCorrectInARow: 0, lastTimeSeen: 0},
-			]
-		},
-	];
+function setup(flashcardData) {
+
 	var currentTimeStep = 0;
 	var currentDatum = flashcardData[0];
 	var currentFlashcard = currentDatum['flashcards'][0];
@@ -88,5 +73,21 @@ function setup() {
 
 }
 $(function() {
-	setup();
+	var flashcardData = [
+		{
+			name: "SAT Vocabulary",
+			flashcards: [
+				{word: "candid", definition: "honest", timesCorrectInARow: 0, lastTimeSeen: 0},
+				{word: "vestigial", definition: "like the human appendix", timesCorrectInARow: 0, lastTimeSeen: 0},
+			]
+		},
+		{
+			name: "Chemistry",
+			flashcards: [
+				{word: "Cu", definition: "Copper", timesCorrectInARow: 0, lastTimeSeen: 0},
+				{word: "Ag", definition: "Silver", timesCorrectInARow: 0, lastTimeSeen: 0},
+			]
+		},
+	];
+	setup(flashcardData);
 });
