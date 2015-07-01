@@ -4,6 +4,29 @@ function setup(flashcardData) {
 	var currentDatum = flashcardData[0];
 	var currentFlashcard = currentDatum['flashcards'][0];
 
+	function recalculateChart(flashcards){
+		var counts = [];
+		flashcards.forEach(function(flashcard){
+			var x = flashcard["timesCorrectInARow"];
+			if (!counts[x]){
+				counts[x] = 0
+			}
+			counts[x] = counts[x] + 1;
+		});
+		for (var i = 0; i < counts.length; i++) {
+			counts[i] = counts[i] || 0;
+		}
+		var data = {
+			labels: Object.keys(counts),
+			datasets: [
+				{
+					data: counts
+				}
+			]
+		};
+		var ctx = document.getElementById("myChart").getContext("2d");
+		var myNewChart = new Chart(ctx).Bar(data);
+	}
 	function getNextFlashcard(flashcards) {
 		var earliestFlashcard = flashcards[0];
 		flashcards.forEach(function(flashcard) {
@@ -15,6 +38,7 @@ function setup(flashcardData) {
 				earliestFlashcard = flashcard;
 			}
 		});
+		recalculateChart(flashcards);
 		return earliestFlashcard;
 		
 	}
@@ -26,16 +50,7 @@ function setup(flashcardData) {
 	}
 
 	
-	var data = {
-		labels: ["incorrect", "correct"],
-		datasets: [
-			{
-				data: [40,60]
-			}
-		]
-	};
-	var ctx = document.getElementById("myChart").getContext("2d");
-	var myNewChart = new Chart(ctx).Bar(data);
+	
 	
 	$(".flashcard-box").on("click", function() {
 		$(".flashcard-box").html(currentFlashcard['definition']);
