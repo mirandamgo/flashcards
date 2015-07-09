@@ -68,7 +68,12 @@ function setup(flashcardData) {
 	
 	
 	$(".flashcard-box").on("click", function() {
-		$(".flashcard-box").html(currentFlashcard['definition']);
+		var html = "<div>"
+		+ currentFlashcard['word'] 
+		+ "<br><br><b>"
+		+ currentFlashcard['definition']
+		+ "</b></div>";
+		$(".flashcard-box").html(html);
 	});
 	$("#correct-button").on("click", function() {
 		console.log(currentDatum);
