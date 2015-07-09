@@ -1,3 +1,4 @@
+var maxNewCardsAtOnce = 10;
 function storageLoad(){
 	return JSON.parse(window.localStorage.getItem("data"));
 };
@@ -35,14 +36,21 @@ function setup(flashcardData) {
 	}
 	function getNextFlashcard(flashcards) {
 		var earliestFlashcard = flashcards[0];
+		var numIncorrectCards = 0;
 		flashcards.forEach(function(flashcard) {
 			var lastTimeSeen = flashcard["lastTimeSeen"];
 			var timesCorrectInARow = flashcard["timesCorrectInARow"];
-			var whenToShowAgain = lastTimeSeen + Math.pow(2, timesCorrectInARow);
-			flashcard["whenToShowAgain"] = whenToShowAgain;
-			if (flashcard["whenToShowAgain"] < earliestFlashcard["whenToShowAgain"]) {
-				earliestFlashcard = flashcard;
+			if (timesCorrectInARow === 0){
+				numIncorrectCards = numIncorrectCards + 1;
 			}
+			if (numIncorrectCards <= maxNewCardsAtOnce){
+				var whenToShowAgain = lastTimeSeen + Math.pow(2, timesCorrectInARow);
+				flashcard["whenToShowAgain"] = whenToShowAgain;
+				if (flashcard["whenToShowAgain"] < earliestFlashcard["whenToShowAgain"]) {
+					earliestFlashcard = flashcard;
+				}
+			}
+			
 		});
 		recalculateChart(flashcards);
 		storageSave(flashcardData);
