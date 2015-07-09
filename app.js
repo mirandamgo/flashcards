@@ -103,9 +103,12 @@ $(function() {
 	flashcardData = [
 	
 	];
-	$.get("satvocab.csv").done(function(response){
+	var files = ["satvocab.csv", "periodictable.csv"];
+	
+	
+	function processDownloadedFile(subjectName, response){
 		var flashcards = [];
-		flashcardData.push({name: "SAT Vocabulary", flashcards: flashcards});
+		flashcardData.push({name: subjectName, flashcards: flashcards});
 		var lines = response.split("\n");
 		
 		lines.forEach(function(line){
@@ -115,7 +118,14 @@ $(function() {
 				flashcards.push(flashcard);
 			}
 		});
-		setup(flashcardData);
+		if (flashcardData.length === files.length){
+			setup(flashcardData);
+		}
+	}
+	files.forEach(function(filename){
+		var promise = $.get(filename);	
+		promise.then(function(response){
+			processDownloadedFile(filename, response);
+		});
 	});
-	
 });
