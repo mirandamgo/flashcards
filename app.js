@@ -74,7 +74,12 @@ function setup(flashcardData) {
 		currentFlashcard = getNextFlashcard(currentDatum['flashcards']);
 		displayFlashcard(currentFlashcard);
 	});
-	
+	$("#reset").on("click", function() {
+		if (confirm("are you sure?")){
+			window.localStorage.removeItem("data");
+			window.location.reload();
+		}
+	});
 	//create subject links on left
 	flashcardData.forEach(function(datum) {
 		var prefix = "<div class=\"set-link\">";
