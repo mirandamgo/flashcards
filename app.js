@@ -10,7 +10,34 @@ function setup(flashcardData) {
 	var currentTimeStep = 0;
 	var currentDatum = flashcardData[0];
 	var currentFlashcard = currentDatum['flashcards'][0];
-
+	
+	function recalculateScores(flashcards){
+		var currentScore = 0;
+		var numCardsCorrect = 0;
+		var numCardsSeen = 0;
+		flashcards.forEach(function(flashcard){
+			var isCorrect = flashcard["timesCorrectInARow"] > 0;
+			if (isCorrect){
+				numCardsCorrect = numCardsCorrect + 1;
+			}
+			var isSeen = flashcard["lastTimeSeen"] > 0;
+			if (isSeen){
+				numCardsSeen = numCardsSeen + 1;
+			}
+			if (flashcard["timesCorrectInARow"] >= 2){
+				currentScore = currentScore + 10;
+			} else if (flashcard["timesCorrectInARow"] === 1){
+				currentScore = currentScore + 5;
+			} else if (isSeen){
+				currentScore = currentScore + 1;
+			}
+		})
+		var percentCorrect = numCardsSeen === 0 ? 0 : numCardsCorrect/numCardsSeen*100;
+		
+		$("#percent-correct-value").html(Math.round(percentCorrect) + "%");
+		$("#current-score-value").html(currentScore);
+	}
+	
 	function recalculateChart(flashcards){
 		var counts = [];
 		flashcards.forEach(function(flashcard){
@@ -53,6 +80,7 @@ function setup(flashcardData) {
 			
 		});
 		recalculateChart(flashcards);
+		recalculateScores(flashcards);
 		storageSave(flashcardData);
 		return earliestFlashcard;
 		

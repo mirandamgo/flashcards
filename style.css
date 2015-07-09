@@ -7,6 +7,27 @@ html, body {
 	margin-right: 15px;
 }
 
+.top-bar {
+	display: flex;
+	align-items: flex-end;
+	border-bottom: 3px solid #888;
+	margin-bottom: 15px;
+}
+
+#title {
+	font-weight: bold;
+	font-size: 30px;
+	flex-grow: 1;
+}
+
+.percent-correct {
+
+}
+
+.current-score {
+	margin-left: 10px;
+}
+
 .navigation-box {
 	flex-grow: 1;
 	padding-right: 15px;
