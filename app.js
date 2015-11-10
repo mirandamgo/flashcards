@@ -10,7 +10,7 @@ function setup(flashcardData) {
 	var currentTimeStep = 0;
 	var currentDatum = flashcardData[0];
 	var currentFlashcard = currentDatum['flashcards'][0];
-	
+
 	function recalculateScores(flashcards){
 		var currentScore = 0;
 		var numCardsCorrect = 0;
@@ -33,11 +33,11 @@ function setup(flashcardData) {
 			}
 		})
 		var percentCorrect = numCardsSeen === 0 ? 0 : numCardsCorrect/numCardsSeen*100;
-		
+
 		$("#percent-correct-value").html(Math.round(percentCorrect) + "%");
 		$("#current-score-value").html(currentScore);
 	}
-	
+
 	function recalculateChart(flashcards){
 		var counts = [];
 		flashcards.forEach(function(flashcard){
@@ -77,13 +77,13 @@ function setup(flashcardData) {
 					earliestFlashcard = flashcard;
 				}
 			}
-			
+
 		});
 		recalculateChart(flashcards);
 		recalculateScores(flashcards);
 		storageSave(flashcardData);
 		return earliestFlashcard;
-		
+
 	}
 	function displayFlashcard(flashcard) {
 		var wordElem = $("<div>"+flashcard['word']+"</div>");
@@ -92,12 +92,12 @@ function setup(flashcardData) {
 		flashcard['lastTimeSeen'] = currentTimeStep;
 	}
 
-	
-	
-	
+
+
+
 	$(".flashcard-box").on("click", function() {
 		var html = "<div>"
-		+ currentFlashcard['word'] 
+		+ currentFlashcard['word']
 		+ "<br><br><b>"
 		+ currentFlashcard['definition']
 		+ "</b></div>";
@@ -125,7 +125,7 @@ function setup(flashcardData) {
 	flashcardData.forEach(function(datum) {
 		var prefix = "<div class=\"set-link\">";
 		var suffix = "</div>";
-		
+
 		var html = prefix + datum['name'] + suffix;
 		var elem = $(html);
 		elem.on("click", function() {
@@ -136,7 +136,7 @@ function setup(flashcardData) {
 		});
 		$("#subject-list").append(elem);
 	});
-		
+
 
 
 }
@@ -147,16 +147,16 @@ $(function() {
 		return;
 	}
 	flashcardData = [
-	
+
 	];
-	var files = ["satvocab.csv", "periodictable.csv"];
-	
-	
+	var files = ["satvocab.csv", "periodictable.csv", "spanish.csv"];
+
+
 	function processDownloadedFile(subjectName, response){
 		var flashcards = [];
 		flashcardData.push({name: subjectName, flashcards: flashcards});
 		var lines = response.split("\n");
-		
+
 		lines.forEach(function(line){
 			var fields = line.substring(1, line.length-1).split('","');
 			if (fields[0] && fields[1]) {
@@ -169,7 +169,7 @@ $(function() {
 		}
 	}
 	files.forEach(function(filename){
-		var promise = $.get(filename);	
+		var promise = $.get(filename);
 		promise.then(function(response){
 			processDownloadedFile(filename, response);
 		});
