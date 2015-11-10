@@ -125,8 +125,15 @@ function setup(flashcardData) {
 	flashcardData.forEach(function(datum) {
 		var prefix = "<div class=\"set-link\">";
 		var suffix = "</div>";
-
-		var html = prefix + datum['name'] + suffix;
+		var name = datum['name'];
+		if (name == "satvocab.csv") {
+			name = "SAT Vocab";
+		} else if (name == "periodictable.csv") {
+			name = "Periodic Table";
+		} else if (name == "spanish.csv") {
+			name = "Spanish";
+		}
+		var html = prefix + name + suffix;
 		var elem = $(html);
 		elem.on("click", function() {
 			$("#title").html(datum['name']);
