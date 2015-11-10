@@ -138,6 +138,8 @@ function setup(flashcardData) {
 			name = "Computer Science"
 		} else if (name == "macro.csv") {
 			name = "Macroeconomics"
+		} else if (name == "english.csv") {
+			name = "Literature"
 		}
 		var html = prefix + name + suffix;
 		var elem = $(html);
@@ -162,7 +164,7 @@ $(function() {
 	flashcardData = [
 
 	];
-	var files = ["satvocab.csv", "periodictable.csv", "spanish.csv", "biology.csv", "apcs.csv", "macro.csv"];
+	var files = ["satvocab.csv", "periodictable.csv", "spanish.csv", "biology.csv", "apcs.csv", "macro.csv", "english.csv"];
 
 
 	function processDownloadedFile(subjectName, response){
