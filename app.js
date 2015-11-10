@@ -132,11 +132,13 @@ function setup(flashcardData) {
 			name = "Periodic Table";
 		} else if (name == "spanish.csv") {
 			name = "Spanish";
+		} else if (name == "biology.csv") {
+			name = "Biology";
 		}
 		var html = prefix + name + suffix;
 		var elem = $(html);
 		elem.on("click", function() {
-			$("#title").html(datum['name']);
+			$("#title").html(name);
 			currentDatum = datum;
 			currentFlashcard = getNextFlashcard(currentDatum['flashcards']);
 			displayFlashcard(currentFlashcard);
@@ -156,7 +158,7 @@ $(function() {
 	flashcardData = [
 
 	];
-	var files = ["satvocab.csv", "periodictable.csv", "spanish.csv"];
+	var files = ["satvocab.csv", "periodictable.csv", "spanish.csv", "biology.csv"];
 
 
 	function processDownloadedFile(subjectName, response){
